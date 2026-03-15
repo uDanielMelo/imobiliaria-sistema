@@ -14,7 +14,7 @@ class ImovelSerializer(serializers.ModelSerializer):
             'proprietario', 'proprietario_nome',
             'total_contratos', 'created_at', 'updated_at'
         ]
-        read_only_fields = ['id', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'proprietario', 'created_at', 'updated_at']
 
     def get_total_contratos(self, obj):
         return obj.contratos.count()

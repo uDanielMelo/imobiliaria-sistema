@@ -2,6 +2,10 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import useAuthStore from './store/authStore'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
+import Imoveis from './pages/Imoveis'
+import Inquilinos from './pages/Inquilinos'
+import Contratos from './pages/Contratos'
+import Pagamentos from './pages/Pagamentos'
 import Sidebar from './components/Sidebar'
 
 function PrivateLayout({ children }) {
@@ -21,6 +25,10 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<PrivateLayout><Dashboard /></PrivateLayout>} />
+        <Route path="/imoveis" element={<PrivateLayout><Imoveis /></PrivateLayout>} />
+        <Route path="/inquilinos" element={<PrivateLayout><Inquilinos /></PrivateLayout>} />
+        <Route path="/contratos" element={<PrivateLayout><Contratos /></PrivateLayout>} />
+        <Route path="/pagamentos" element={<PrivateLayout><Pagamentos /></PrivateLayout>} />
         <Route path="*" element={<Navigate to="/dashboard" />} />
       </Routes>
     </BrowserRouter>
