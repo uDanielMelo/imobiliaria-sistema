@@ -142,3 +142,43 @@ class Mensagem(BaseModel):
 
     def __str__(self):
         return f'Mensagem de {self.autor} em {self.created_at}'
+    
+class Lead(BaseModel):
+
+    class TipoChoices(models.TextChoices):
+        CONTATO = 'contato', 'Contato'
+        VISITA = 'visita', 'Agendamento de Visita'
+        PROPOSTA = 'proposta', 'Proposta'
+
+    class StatusChoices(models.TextChoices):
+        NOVO = 'novo', 'Novo'
+        EM_ATENDIMENTO = 'em_atendimento', 'Em Atendimento'
+        CONVERTIDO = 'convertido', 'Convertido'
+        PERDIDO = 'perdido', 'Perdido'
+
+    imovel = models.ForeignKey(
+        'imoveis.Imovel',
+        on_delete=models.PROTECT,
+        related_name='leads'
+    )
+    nome = models.CharField(max_length=255)
+    telefone = models.CharField(max_length=20)
+    email = models.EmailField(null=True, blank=True)
+    tipo = models.CharField(max_length=20, choices=TipoChoices.choices)
+    mensagem = models.TextField(null=True, blank=True)
+    data_visita = models.DateTimeField(null=True, blank=True)
+    valor_proposta = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    status = models.CharField(
+        max_length=20,
+        choices=StatusChoices.choices,
+        default=StatusChoices.NOVO
+    )
+
+    class Meta:
+        db_table = 'leads'
+        verbose_name = 'Lead'
+        verbose_name_plural = 'Leads'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f'{self.nome} - {self.tipo} - {self.imovel}'
