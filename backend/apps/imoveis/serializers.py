@@ -25,7 +25,9 @@ class ImovelSerializer(serializers.ModelSerializer):
             'tem_churrasqueira', 'tem_portaria',
             'status', 'slug', 'publicado', 'destaque',
             'proprietario', 'proprietario_nome',
-            'total_contratos', 'fotos', 'created_at', 'updated_at'
+            'total_contratos', 'fotos', 'created_at', 'updated_at',
+            'tem_elevador', 'tem_sacada', 'tem_deposito',
+            'tem_lavanderia', 'tem_ar_condicionado', 'prox_metro',
         ]
         read_only_fields = ['id', 'proprietario', 'slug', 'created_at', 'updated_at']
 
@@ -46,6 +48,8 @@ class ImovelListSerializer(serializers.ModelSerializer):
             'valor_aluguel', 'valor_venda', 'valor_condominio', 'valor_iptu',
             'aceita_pets', 'mobiliado', 'tem_piscina', 'tem_academia',
             'tem_churrasqueira', 'tem_portaria', 'andares', 'descricao',
+            'tem_elevador', 'tem_sacada', 'tem_deposito',
+            'tem_lavanderia', 'tem_ar_condicionado', 'prox_metro',
             'slug', 'publicado', 'destaque',
             'foto_capa', 'total_contratos'
         ]

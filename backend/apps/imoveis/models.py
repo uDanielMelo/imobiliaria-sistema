@@ -76,6 +76,12 @@ class Imovel(BaseModel):
     tem_academia = models.BooleanField(default=False)
     tem_churrasqueira = models.BooleanField(default=False)
     tem_portaria = models.BooleanField(default=False)
+    tem_elevador = models.BooleanField(default=False)
+    tem_sacada = models.BooleanField(default=False)
+    tem_deposito = models.BooleanField(default=False)
+    tem_lavanderia = models.BooleanField(default=False)
+    tem_ar_condicionado = models.BooleanField(default=False)
+    prox_metro = models.BooleanField(default=False)
 
     # Vitrine pública
     slug = models.SlugField(max_length=255, unique=True, blank=True)

@@ -33,6 +33,8 @@ const FORM_INICIAL = {
   valor_aluguel: '', valor_venda: '', valor_condominio: '', valor_iptu: '',
   aceita_pets: false, mobiliado: false, tem_piscina: false,
   tem_academia: false, tem_churrasqueira: false, tem_portaria: false,
+  tem_elevador: false, tem_sacada: false, tem_deposito: false,
+  tem_lavanderia: false, tem_ar_condicionado: false, prox_metro: false,
 }
 
 const formatarParaExibicao = (valor) => {
@@ -351,6 +353,15 @@ export default function Imoveis() {
                   {imovel.vagas > 0 && <span className="flex items-center gap-1"><Car size={12} />{imovel.vagas}</span>}
                   {imovel.area_m2 && <span>{imovel.area_m2}m²</span>}
                 </div>
+                {/* Comodidades rápidas no card */}
+                <div className="flex flex-wrap gap-1 mb-2">
+                  {imovel.aceita_pets && <span className="text-xs bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded">🐾 Pets</span>}
+                  {imovel.mobiliado && <span className="text-xs bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded">🛋️ Mobiliado</span>}
+                  {imovel.tem_piscina && <span className="text-xs bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded">🏊 Piscina</span>}
+                  {imovel.tem_elevador && <span className="text-xs bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded">🛗 Elevador</span>}
+                  {imovel.tem_sacada && <span className="text-xs bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded">🌿 Sacada</span>}
+                  {imovel.prox_metro && <span className="text-xs bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded">🚇 Metrô</span>}
+                </div>
                 <div className="flex items-center justify-between pt-3 border-t border-slate-50">
                   <span className="text-xs text-slate-500">{TIPO_LABELS[imovel.tipo]}</span>
                   <div className="text-right">
@@ -520,22 +531,28 @@ export default function Imoveis() {
                         className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500" />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-slate-600 mb-1">IPTU (R$/ano)</label>
+                      <label className="block text-xs font-medium text-slate-600 mb-1">IPTU (R$/mês)</label>
                       <input name="valor_iptu" value={form.valor_iptu} onChange={handleMoeda('valor_iptu')}
                         className="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500" />
                     </div>
                   </div>
-                  <div>
+                    <div>
                     <label className="block text-xs font-medium text-slate-600 mb-3">Comodidades</label>
                     <div className="grid grid-cols-2 gap-3">
-                      <Toggle label="Aceita pets" name="aceita_pets" value={form.aceita_pets} onChange={handleToggle} />
-                      <Toggle label="Mobiliado" name="mobiliado" value={form.mobiliado} onChange={handleToggle} />
-                      <Toggle label="Piscina" name="tem_piscina" value={form.tem_piscina} onChange={handleToggle} />
-                      <Toggle label="Academia" name="tem_academia" value={form.tem_academia} onChange={handleToggle} />
-                      <Toggle label="Churrasqueira" name="tem_churrasqueira" value={form.tem_churrasqueira} onChange={handleToggle} />
-                      <Toggle label="Portaria" name="tem_portaria" value={form.tem_portaria} onChange={handleToggle} />
+                        <Toggle label="Aceita pets" name="aceita_pets" value={form.aceita_pets} onChange={handleToggle} />
+                        <Toggle label="Mobiliado" name="mobiliado" value={form.mobiliado} onChange={handleToggle} />
+                        <Toggle label="Piscina" name="tem_piscina" value={form.tem_piscina} onChange={handleToggle} />
+                        <Toggle label="Academia" name="tem_academia" value={form.tem_academia} onChange={handleToggle} />
+                        <Toggle label="Churrasqueira" name="tem_churrasqueira" value={form.tem_churrasqueira} onChange={handleToggle} />
+                        <Toggle label="Portaria 24h" name="tem_portaria" value={form.tem_portaria} onChange={handleToggle} />
+                        <Toggle label="Elevador" name="tem_elevador" value={form.tem_elevador} onChange={handleToggle} />
+                        <Toggle label="Sacada/Varanda" name="tem_sacada" value={form.tem_sacada} onChange={handleToggle} />
+                        <Toggle label="Depósito" name="tem_deposito" value={form.tem_deposito} onChange={handleToggle} />
+                        <Toggle label="Lavanderia" name="tem_lavanderia" value={form.tem_lavanderia} onChange={handleToggle} />
+                        <Toggle label="Ar condicionado" name="tem_ar_condicionado" value={form.tem_ar_condicionado} onChange={handleToggle} />
+                        <Toggle label="Próx. Metrô" name="prox_metro" value={form.prox_metro} onChange={handleToggle} />
                     </div>
-                  </div>
+                    </div>
                   <div className="flex justify-between pt-2">
                     <button type="button" onClick={() => setStep(1)}
                       className="border border-slate-200 text-slate-600 px-6 py-2.5 rounded-lg text-sm hover:bg-slate-50 transition-colors">
@@ -670,11 +687,82 @@ export default function Imoveis() {
                 <p className="text-sm text-slate-500">
                 {imovelSelecionado.bairro} · {imovelSelecionado.cidade}/{imovelSelecionado.estado}
                 </p>
-                <div className="flex items-center gap-3 text-sm text-slate-600 py-2">
-                {imovelSelecionado.quartos > 0 && <span className="flex items-center gap-1"><Bed size={14} />{imovelSelecionado.quartos} quartos</span>}
-                {imovelSelecionado.banheiros > 0 && <span className="flex items-center gap-1"><Bath size={14} />{imovelSelecionado.banheiros} banheiros</span>}
-                {imovelSelecionado.vagas > 0 && <span className="flex items-center gap-1"><Car size={14} />{imovelSelecionado.vagas} vagas</span>}
+                <div className="grid grid-cols-4 gap-3 py-2">
+                {[
+                    { v: imovelSelecionado.quartos, l: 'Quartos' },
+                    { v: imovelSelecionado.suites, l: 'Suítes' },
+                    { v: imovelSelecionado.banheiros, l: 'Banheiros' },
+                    { v: imovelSelecionado.vagas, l: 'Vagas' },
+                ].filter(x => x.v > 0).map(({ v, l }) => (
+                    <div key={l} className="bg-slate-50 rounded-lg p-2 text-center">
+                    <p className="text-lg font-bold text-slate-800">{v}</p>
+                    <p className="text-xs text-slate-500">{l}</p>
+                    </div>
+                ))}
                 </div>
+
+                {imovelSelecionado.area_m2 && (
+                <p className="text-sm text-slate-600">
+                    <span className="font-medium">Área:</span> {imovelSelecionado.area_m2}m²
+                    {imovelSelecionado.andares > 0 && ` · ${imovelSelecionado.andares} andar(es)`}
+                </p>
+                )}
+
+                {/* Valores */}
+                <div className="space-y-1">
+                {imovelSelecionado.valor_aluguel && (
+                    <p className="text-sm font-semibold text-slate-800">
+                    Aluguel: {Number(imovelSelecionado.valor_aluguel).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}/mês
+                    </p>
+                )}
+                {imovelSelecionado.valor_venda && (
+                    <p className="text-sm font-semibold text-slate-800">
+                    Venda: {Number(imovelSelecionado.valor_venda).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                    </p>
+                )}
+                {imovelSelecionado.valor_condominio && (
+                    <p className="text-xs text-slate-500">
+                    Condomínio: {Number(imovelSelecionado.valor_condominio).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}/mês
+                    </p>
+                )}
+                {imovelSelecionado.valor_iptu && (
+                    <p className="text-xs text-slate-500">
+                    IPTU: {Number(imovelSelecionado.valor_iptu).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}/mês
+                    </p>
+                )}
+                </div>
+
+                {/* Comodidades */}
+                {(() => {
+                const comodidades = [
+                    { k: 'aceita_pets', l: '🐾 Aceita pets' },
+                    { k: 'mobiliado', l: '🛋️ Mobiliado' },
+                    { k: 'tem_piscina', l: '🏊 Piscina' },
+                    { k: 'tem_academia', l: '🏋️ Academia' },
+                    { k: 'tem_churrasqueira', l: '🔥 Churrasqueira' },
+                    { k: 'tem_portaria', l: '👮 Portaria 24h' },
+                    { k: 'tem_elevador', l: '🛗 Elevador' },
+                    { k: 'tem_sacada', l: '🌿 Sacada/Varanda' },
+                    { k: 'tem_deposito', l: '📦 Depósito' },
+                    { k: 'tem_lavanderia', l: '👕 Lavanderia' },
+                    { k: 'tem_ar_condicionado', l: '❄️ Ar condicionado' },
+                    { k: 'prox_metro', l: '🚇 Próx. Metrô' },
+                ].filter(c => imovelSelecionado[c.k])
+                return comodidades.length > 0 ? (
+                    <div>
+                    <p className="text-xs font-medium text-slate-500 mb-2">Comodidades</p>
+                    <div className="flex flex-wrap gap-2">
+                        {comodidades.map(c => (
+                        <span key={c.k} className="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full">{c.l}</span>
+                        ))}
+                    </div>
+                    </div>
+                ) : null
+                })()}
+
+                {imovelSelecionado.descricao && (
+                <p className="text-sm text-slate-600 bg-slate-50 rounded-lg p-3">{imovelSelecionado.descricao}</p>
+                )}
                 {imovelSelecionado.descricao && (
                 <p className="text-sm text-slate-600 bg-slate-50 rounded-lg p-3">{imovelSelecionado.descricao}</p>
                 )}
